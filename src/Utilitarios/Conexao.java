@@ -44,8 +44,6 @@ try {
 }
     }
 
-
-
     public void Desconectar(){
         try {
             con.close();
