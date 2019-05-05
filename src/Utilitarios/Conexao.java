@@ -29,7 +29,7 @@ public class Conexao {
     public Conexao() {
     }
 
-    public static void Conectar() {
+    public static Connection Conectar() {
 System.out.println("Conectando ao banco...");
 try {
   Class.forName("org.gjt.mm.mysql.Driver");
@@ -42,6 +42,7 @@ try {
     System.out.println(e);
     throw new RuntimeException(e);
 }
+        return null;
     }
 
     public void Desconectar(){

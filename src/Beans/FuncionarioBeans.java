@@ -24,6 +24,15 @@ public class FuncionarioBeans {
     private String complemento;
     private String email;
     private String telefone;
+    private int numero;
+
+    public int getNumero() {
+        return numero;
+    }
+
+    public void setNumero(int numero) {
+        this.numero = numero;
+    }
     
     public FuncionarioBeans(){
     

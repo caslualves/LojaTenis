@@ -29,21 +29,24 @@ public class FuncionarioDAO {
      String complemento;
      String email;
      String telefone;
+     int numero;
      
      public FuncionarioDAO(){
-         Conexao.Conectar();
+         this.connection = new Conexao().Conectar();
          
      }
      
      public void cadastraFuncionario(FuncionarioBeans funcionario){
-         String sql = "insert into funcionario(cpf, rg,nome dataNascimento, sexo, logradouro, uf, cep, bairro, cidade, complemento, email, telefone) "
-                 + "values(?,?,?,?,?,?,?,?,?,?,?,?,?)";
+         //String sql = "insert into funcionario(cpf, rg,nome dataNascimento, sexo, logradouro, uf, cep, bairro, cidade, complemento, email, telefone, numero, codFuncionario) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+         String sql = "insert into teste(nome, idade, matricula) values(?,?,?)";
+
          try{
              PreparedStatement stmt = connection.prepareStatement(sql);
-             stmt.setString(1, funcionario.getCpf());
-             stmt.setString(2, funcionario.getRg());
-             stmt.setString(3, funcionario.getNome());
-             stmt.setString(4, funcionario.getDataNascimento());
+             
+             stmt.setString(1, funcionario.getNome());
+             stmt.setInt(2, funcionario.getCodFuncionario());
+             stmt.setInt(3, funcionario.getCodFuncionario());
+             /*stmt.setString(4, funcionario.getDataNascimento());
              stmt.setString(5, funcionario.getSexo());
              stmt.setString(6, funcionario.getLogradouro());
              stmt.setString(7, funcionario.getUf());
@@ -53,11 +56,15 @@ public class FuncionarioDAO {
              stmt.setString(11, funcionario.getComplemento());
              stmt.setString(12, funcionario.getEmail());
              stmt.setString(13, funcionario.getTelefone());
-            
+             stmt.setInt(14, funcionario.getNumero());
+             stmt.setInt(15, funcionario.getCodFuncionario());*/
              
+             stmt.executeUpdate();
+             stmt.close();
              
          }catch(SQLException u){
              throw new RuntimeException(u);
+             
          }
     
 }
