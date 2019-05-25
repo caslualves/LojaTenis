@@ -39,12 +39,10 @@ public class CadastroFuncionario extends javax.swing.JFrame {
         txtNome = new java.awt.TextField();
         label1 = new java.awt.Label();
         label2 = new java.awt.Label();
-        label3 = new java.awt.Label();
         label4 = new java.awt.Label();
         label5 = new java.awt.Label();
         txtCPF = new java.awt.TextField();
         txtCodigo = new java.awt.TextField();
-        txtCargo = new java.awt.TextField();
         label6 = new java.awt.Label();
         txtNascimento = new java.awt.TextField();
         txtSexo = new java.awt.TextField();
@@ -92,9 +90,6 @@ public class CadastroFuncionario extends javax.swing.JFrame {
         label2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         label2.setText("Codigo:");
 
-        label3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        label3.setText("Cargo:");
-
         label4.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         label4.setText("Nascimento:");
 
@@ -103,9 +98,8 @@ public class CadastroFuncionario extends javax.swing.JFrame {
 
         txtCPF.setName("txtCPF"); // NOI18N
 
+        txtCodigo.setEnabled(false);
         txtCodigo.setName("txtCodigo"); // NOI18N
-
-        txtCargo.setName("txtCargo"); // NOI18N
 
         label6.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         label6.setText("Sexo:");
@@ -140,11 +134,9 @@ public class CadastroFuncionario extends javax.swing.JFrame {
                     .addComponent(label13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtRG, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(62, 62, 62)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(txtSexo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(label6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(label3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtCargo, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtSexo, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(label6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(txtNascimento, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -181,11 +173,7 @@ public class CadastroFuncionario extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(4, 4, 4)
-                        .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(label3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(4, 4, 4)
-                        .addComponent(txtCargo, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(19, Short.MAX_VALUE))
         );
 
@@ -398,9 +386,7 @@ public class CadastroFuncionario extends javax.swing.JFrame {
         FuncionarioBeans funcionario = new FuncionarioBeans();
         
         funcionario.setNome(txtNome.getText());
-        System.out.println(funcionario.getNome());
-         funcionario.setCodFuncionario(Integer.parseInt(txtCodigo.getText()));
-        System.out.println(funcionario.getCodFuncionario());
+        //funcionario.setCodFuncionario(Integer.parseInt(txtCodigo.getText()));
         funcionario.setCpf(txtCPF.getText());
         funcionario.setEmail(txtEmail.getText());
         funcionario.setTelefone(txtTelefone.getText());
@@ -412,9 +398,13 @@ public class CadastroFuncionario extends javax.swing.JFrame {
         funcionario.setCidade(txtCidade.getText());
         funcionario.setUf(txtUf.getText());
         funcionario.setDataNascimento(txtNascimento.getText());
-        funcionario.setSexo(txtSexo.getText());
-       
+        funcionario.setSexo(txtSexo.getText());   
         funcionario.setComplemento(txtComplemento.getText());
+        
+        
+        //Conexao com = new Conexao();
+        //com.Conectar();
+        
         
        /* if ((txtBairro.getText().isEmpty()) || (txtCEP.getText().isEmpty()) || (txtCidade.getText().isEmpty()) || (txtCPF.getText().isEmpty()) || 
                 (txtBairro.getText().isEmpty() || (txtComplemento.getText().isEmpty()) || (txtEmail.getText().isEmpty()) 
@@ -437,7 +427,11 @@ public class CadastroFuncionario extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton5ActionPerformedCadastrar
 
     private void jButton3ActionPerformedLimpar(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformedLimpar
-        // TODO add your handling code here:
+        
+        
+        
+        
+
     }//GEN-LAST:event_jButton3ActionPerformedLimpar
 
     /**
@@ -497,7 +491,6 @@ public class CadastroFuncionario extends javax.swing.JFrame {
     private java.awt.Label label2;
     private java.awt.Label label20;
     private java.awt.Label label21;
-    private java.awt.Label label3;
     private java.awt.Label label4;
     private java.awt.Label label5;
     private java.awt.Label label6;
@@ -506,7 +499,6 @@ public class CadastroFuncionario extends javax.swing.JFrame {
     private java.awt.TextField txtBairro;
     private java.awt.TextField txtCEP;
     private java.awt.TextField txtCPF;
-    private java.awt.TextField txtCargo;
     private java.awt.TextField txtCidade;
     private java.awt.TextField txtCodigo;
     private java.awt.TextField txtComplemento;

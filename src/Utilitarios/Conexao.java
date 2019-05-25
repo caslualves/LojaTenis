@@ -7,6 +7,7 @@ package Utilitarios;
 
 import com.mysql.jdbc.PreparedStatement;
 import com.mysql.jdbc.Statement;
+import static com.sun.javafx.css.SizeUnits.EX;
 import java.sql.ResultSet;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -20,38 +21,61 @@ import java.util.logging.Logger;
  */
 public class Conexao {
     
-    public static Connection con;
-    String url = "jdbc:mysql://localhost/LojaTenis";
-    String driver = "com.mysql.jdbc.Driver";
-    String user = "root";
-    String password = "";
+    //public static Connection con;
+    private static final String url = "jdbc:mysql://localhost/LojaTenis";
+   //String driver = "com.mysql.jdbc.Driver";
+    private static final String driver = "com.mysql.jdbc.Driver";
+    private static final String user = "root";
+    private static final String password = "";
+
     
     public Conexao() {
     }
 
     public static Connection Conectar() {
-System.out.println("Conectando ao banco...");
-try {
-  Class.forName("org.gjt.mm.mysql.Driver");
-  con =  DriverManager.getConnection("jdbc:mysql://localhost/LojaTenis","root", "");
-  System.out.println("Conectado.");
-} catch (ClassNotFoundException ex) {
-    System.out.println("Classe não encontrada, adicione o driver nas bibliotecas.");
-  Logger.getLogger(Conexao.class.getName()).log(Level.SEVERE, null, ex);
-  } catch(SQLException e) {
-    System.out.println(e);
-    throw new RuntimeException(e);
-}
-        return null;
-    }
+        
+        try {
+            Class.forName(driver);
+            
+            return DriverManager.getConnection(url, user, password);
+            
+        } catch (ClassNotFoundException | SQLException ex) {
+            throw new RuntimeException("Erro na conexão: ", ex);
+        }
+           
+      
 
-    public void Desconectar(){
+    }  
+
+    public static void Desconectar(Connection con){
         try {
             con.close();
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
     }
+    
+     public static void Desconectar(Connection con, PreparedStatement stmt){
+         Desconectar(con);
+         
+        try {
+            stmt.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+     
+     public static void Desconectar(Connection con, PreparedStatement stmt, ResultSet rs){
+         Desconectar(con, stmt);
+         
+        try {
+            rs.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+    
+    
     
     
 }

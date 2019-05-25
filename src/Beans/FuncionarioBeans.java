@@ -5,6 +5,8 @@
  */
 package Beans;
 
+
+
 /**
  *
  * @author lucas
@@ -25,6 +27,10 @@ public class FuncionarioBeans {
     private String email;
     private String telefone;
     private int numero;
+    
+        public FuncionarioBeans(){
+    
+}
 
     public int getNumero() {
         return numero;
@@ -34,10 +40,6 @@ public class FuncionarioBeans {
         this.numero = numero;
     }
     
-    public FuncionarioBeans(){
-    
-}
-
     public int getCodFuncionario() {
         return codFuncionario;
     }
