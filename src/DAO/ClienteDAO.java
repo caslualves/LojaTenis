@@ -6,6 +6,8 @@
 package DAO;
 import Utilitarios.Conexao;
 import Beans.ClienteBeans;
+import GUI.CadastroCliente;
+import Utilitarios.modeloTabela;
 import java.util.List;
 import java.util.ArrayList;
 import java.sql.*;
@@ -14,6 +16,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.sql.ResultSet;
 import javax.swing.JOptionPane;
+import javax.swing.ListSelectionModel;
 
 /**
  *

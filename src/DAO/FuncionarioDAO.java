@@ -8,6 +8,10 @@ import Utilitarios.Conexao;
 import Beans.FuncionarioBeans;
 import java.sql.*;
 import java.sql.PreparedStatement;
+import java.util.ArrayList;
+import javafx.scene.control.ComboBox;
+import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -16,6 +20,7 @@ import java.sql.PreparedStatement;
 public class FuncionarioDAO {
     //private Connection connection;
      int codFuncionario;
+     int codCargo;
      String cpf;
      String rg;
      String nome;
@@ -30,6 +35,7 @@ public class FuncionarioDAO {
      String email;
      String telefone;
      int numero;
+     //String nomeCargo;
      
      /*public FuncionarioDAO(){
          this.connection = new Conexao().Conectar();
@@ -38,10 +44,12 @@ public class FuncionarioDAO {
      
      public void cadastraFuncionario(FuncionarioBeans funcionario){
          
+         bucarCodCargo(funcionario.getNomeCargo());
+      
          Connection con = Conexao.Conectar();
          PreparedStatement stmt = null;
          
-         String sql = "insert into funcionario (cpf, rg, nome, dataNascimento, sexo, logradouro, uf, cep, bairro, cidade, complemento, email, telefone, numero)VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+         String sql = "insert into funcionario (cpf, rg, nome, dataNascimento, sexo, logradouro, uf, cep, bairro, cidade, complemento, email, telefone, numero, codCargo)VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
          
          try{
              
@@ -61,6 +69,8 @@ public class FuncionarioDAO {
              stmt.setString(12, funcionario.getEmail());
              stmt.setString(13, funcionario.getTelefone());
              stmt.setInt(14, funcionario.getNumero());
+             stmt.setInt(15, codCargo);
+            
              
              stmt.executeUpdate();
              stmt.close();
@@ -74,4 +84,62 @@ public class FuncionarioDAO {
          }
     
 }
+     
+     public void popularComboBox(JComboBox combo){
+        
+        Connection con = Conexao.Conectar();
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        
+
+        String sql = "select * from cargo";
+        
+        try {
+            stmt = con.prepareStatement("select * from cargo");
+            rs = stmt.executeQuery();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao carregar comboBox!" + ex);
+        }
+        
+        try{
+            while(rs.next()){
+                combo.addItem(rs.getString("nome"));
+            }
+        }catch(SQLException ex){
+            JOptionPane.showMessageDialog(null, "Erro ao carregar comboBox!" + ex);
+        }finally{
+            Conexao.Desconectar(con);
+        }
+     }
+     
+     public void bucarCodCargo(String nome){
+         
+        Connection con = Conexao.Conectar();
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        
+        String sql = "select codCargo from cargo where nome = '"+nome+"'";
+        
+        
+        try {
+            stmt = con.prepareStatement(sql);
+            rs = stmt.executeQuery();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao carregar comboBox!" + ex);
+        }
+        
+        try{
+            rs.first();
+            codCargo = rs.getInt("codCargo");
+        }catch (SQLException ex){
+            JOptionPane.showMessageDialog(null, "Erro ao buscar cargo!" + ex);
+        }finally{
+            Conexao.Desconectar(con);
+        }
+        
+
+         
+     }
+     
+     
 }

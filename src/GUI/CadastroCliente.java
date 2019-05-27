@@ -284,17 +284,10 @@ public class CadastroCliente extends javax.swing.JFrame {
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Erro ao carregar colunas!" + ex);
         }
-        /*try {
-            rs = stmt.executeQuery();
-        } catch (SQLException ex) {
-            Logger.getLogger(CadastroCliente.class.getName()).log(Level.SEVERE, null, ex);
-        }*/
-         
+
         ArrayList dados = new ArrayList();
         
         String[] colunas = new String[]{"Codigo", "Nome", "Email", "Telefone"};
-        
-        Conexao.Conectar();
         
         try {
             rs.first();
@@ -304,9 +297,12 @@ public class CadastroCliente extends javax.swing.JFrame {
             }while(rs.next());
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "erro!!!" + ex);
+        }finally{
+            Conexao.Desconectar(con, (com.mysql.jdbc.PreparedStatement) stmt, rs);
         }
         
         modeloTabela modelo = new modeloTabela(dados, colunas);
+        
         jTableCliente.setModel(modelo);
         jTableCliente.getColumnModel().getColumn(0).setPreferredWidth(80);
         jTableCliente.getColumnModel().getColumn(0).setResizable(false);
@@ -326,6 +322,8 @@ public class CadastroCliente extends javax.swing.JFrame {
 
        
     }
+    
+   
         
     
     /**

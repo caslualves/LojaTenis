@@ -27,10 +27,30 @@ public class FuncionarioBeans {
     private String email;
     private String telefone;
     private int numero;
+    private int codCargo;
+    private String nomeCargo;
+
+    public String getNomeCargo() {
+        return nomeCargo;
+    }
+
+    public void setNomeCargo(String nomeCargo) {
+        this.nomeCargo = nomeCargo;
+    }
     
-        public FuncionarioBeans(){
+   public FuncionarioBeans(){
     
 }
+
+    public int getCodCargo() {
+        return codCargo;
+    }
+
+    public void setCodCargo(int codCargo) {
+        this.codCargo = codCargo;
+    }
+    
+ 
 
     public int getNumero() {
         return numero;
