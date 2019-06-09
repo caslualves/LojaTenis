@@ -11,7 +11,7 @@ package Beans;
  */
 public class ProdutoBeans {
     private int codProduto;
-    private String nomeProduto;
+    private String descricao ;
     private double preco;
     private int codTamanho;
     private int codMaterial;
@@ -20,10 +20,47 @@ public class ProdutoBeans {
     private int codMarca;
     private int codFornecedor;
     private int codCategoria;
+    private String genero;
+    String nomeMarca;
+    String nomeCategoria;
     
     public ProdutoBeans(){
         
     }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+
+    public String getNomeMarca() {
+        return nomeMarca;
+    }
+
+    public void setNomeMarca(String nomeMarca) {
+        this.nomeMarca = nomeMarca;
+    }
+
+    public String getNomeCategoria() {
+        return nomeCategoria;
+    }
+
+    public void setNomeCategoria(String nomeCategoria) {
+        this.nomeCategoria = nomeCategoria;
+    }
+
+    public String getGenero() {
+        return genero;
+    }
+
+    public void setGenero(String genero) {
+        this.genero = genero;
+    }
+    
+    
 
     public int getCodProduto() {
         return codProduto;
@@ -33,12 +70,12 @@ public class ProdutoBeans {
         this.codProduto = codProduto;
     }
 
-    public String getNomeProduto() {
-        return nomeProduto;
+    public String getdescricao() {
+        return descricao;
     }
 
-    public void setNomeProduto(String nomeProduto) {
-        this.nomeProduto = nomeProduto;
+    public void setdescricao(String descricao) {
+        this.descricao = descricao;
     }
 
     public double getPreco() {

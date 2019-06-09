@@ -319,13 +319,10 @@ public class CadastroCliente extends javax.swing.JFrame {
         jTableCliente.setAutoResizeMode(jTableCliente.AUTO_RESIZE_OFF);
         jTableCliente.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         
-
        
     }
     
    
-        
-    
     /**
      * @param args the command line arguments
      */
