@@ -122,19 +122,25 @@ public class ClienteDAO {
             stmt = con.prepareStatement(sql);
             rs = stmt.executeQuery();
             
-             rs.first();
-             //buscaNomeCliente(rs.getInt("codCliente"));
-             cli.setNome(rs.getString("nome"));
-             cli.setCpf(rs.getString("cpf"));
-             cli.setEmail(rs.getString("email"));
-             cli.setDataNascimento(rs.getString("dataNascimento"));
-             cli.setTelefone(rs.getString("telefone"));
-             cli.setSexo(rs.getString("sexo"));
-             cli.setCodCliente(rs.getInt("codCliente"));
-         
-
+            if(!rs.isBeforeFirst()){
+                JOptionPane.showMessageDialog(null, "Nada encontrado!");
+                
+            } else{
+                rs.first();
+                //buscaNomeCliente(rs.getInt("codCliente"));
+                cli.setNome(rs.getString("nome"));
+                cli.setCpf(rs.getString("cpf"));
+                cli.setEmail(rs.getString("email"));
+                cli.setDataNascimento(rs.getString("dataNascimento"));
+                cli.setTelefone(rs.getString("telefone"));
+                cli.setSexo(rs.getString("sexo"));
+                cli.setCodCliente(rs.getInt("codCliente")); 
+                
+            }
+            
          }catch(SQLException ex){
-             JOptionPane.showMessageDialog(null, "erro!!! nada encontrado!" + ex);
+             JOptionPane.showMessageDialog(null, "erro!!!" + ex);
+             
          }
          
          return cli;
@@ -158,6 +164,44 @@ public class ClienteDAO {
             Conexao.Desconectar(con, (com.mysql.jdbc.PreparedStatement) stmt, rs);
         }
             
+      }
+      
+      public void editaCliente(ClienteBeans cliente){
+        Connection con = Conexao.Conectar();
+        PreparedStatement stmt = null;
+        //ResultSet rs = null;
+         
+        String sql = "update cliente set nome=?,dataNascimento=?, sexo=?, cpf=?, email=?, telefone=? where codCliente=?";
+
+        try{
+            stmt = con.prepareStatement(sql);
+
+            stmt.setString(1, cliente.getNome());
+            stmt.setString(2, cliente.getDataNascimento());
+            stmt.setString(3, cliente.getSexo());
+            stmt.setString(4, cliente.getCpf());
+            stmt.setString(5, cliente.getEmail());  
+            stmt.setString(6, cliente.getTelefone());
+            stmt.setInt(7, cliente.getCodCliente());
+            
+            stmt.executeUpdate();
+            stmt.close();
+            
+        }catch(SQLException ex){
+            JOptionPane.showMessageDialog(null, "erro!!!" + ex); 
+        }finally{
+            Conexao.Desconectar(con, (com.mysql.jdbc.PreparedStatement)stmt);
+        }
+        
+             
+            
+         
+         
+         
+         
+         
+         
+         
       }
 }
 

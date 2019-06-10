@@ -62,14 +62,15 @@ public class CadastroCliente extends javax.swing.JFrame {
         txtEmail = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
         comboSexo = new javax.swing.JComboBox<>();
-        txtCadastra = new javax.swing.JButton();
+        btnCadastrar = new javax.swing.JButton();
         txtNome = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableCliente = new javax.swing.JTable();
-        txtListar = new javax.swing.JButton();
+        btnListar = new javax.swing.JButton();
         txtPesquisa = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
-        txtBusca = new javax.swing.JButton();
+        btnBuscar = new javax.swing.JButton();
+        btnEditar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -110,11 +111,11 @@ public class CadastroCliente extends javax.swing.JFrame {
 
         comboSexo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Masculino", "Feminino" }));
 
-        txtCadastra.setText("CADASTRAR");
-        txtCadastra.setName("btnCadastra"); // NOI18N
-        txtCadastra.addActionListener(new java.awt.event.ActionListener() {
+        btnCadastrar.setText("CADASTRAR");
+        btnCadastrar.setName("btnCadastra"); // NOI18N
+        btnCadastrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtCadastraActionPerformedCadastrar(evt);
+                btnCadastrarActionPerformedCadastrar(evt);
             }
         });
 
@@ -133,11 +134,11 @@ public class CadastroCliente extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(jTableCliente);
 
-        txtListar.setText("LISTAR");
-        txtListar.setName("btnCadastra"); // NOI18N
-        txtListar.addActionListener(new java.awt.event.ActionListener() {
+        btnListar.setText("LISTAR");
+        btnListar.setName("btnCadastra"); // NOI18N
+        btnListar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtListarActionPerformedListar(evt);
+                btnListarActionPerformedListar(evt);
             }
         });
 
@@ -146,11 +147,18 @@ public class CadastroCliente extends javax.swing.JFrame {
         jLabel10.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel10.setText("Filtro:");
 
-        txtBusca.setText("BUSCA");
-        txtBusca.setName("btnCadastra"); // NOI18N
-        txtBusca.addActionListener(new java.awt.event.ActionListener() {
+        btnBuscar.setText("BUSCA");
+        btnBuscar.setName("btnCadastra"); // NOI18N
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtBuscaActionPerformedListar(evt);
+                btnBuscarActionPerformedListar(evt);
+            }
+        });
+
+        btnEditar.setText("editar");
+        btnEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarActionPerformed(evt);
             }
         });
 
@@ -199,16 +207,21 @@ public class CadastroCliente extends javax.swing.JFrame {
                                 .addGap(18, 18, 18)
                                 .addComponent(jLabel2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
-                                .addComponent(txtBusca, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel10)
-                                .addGap(18, 18, 18)
-                                .addComponent(txtPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(txtListar, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel10)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(txtPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(76, 76, 76)))
+                                .addComponent(btnListar, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(36, 36, 36)
-                                .addComponent(txtCadastra, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(btnCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 689, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(91, Short.MAX_VALUE))
         );
@@ -218,7 +231,7 @@ public class CadastroCliente extends javax.swing.JFrame {
                 .addGap(25, 25, 25)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(txtBusca, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(20, 20, 20)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -244,7 +257,9 @@ public class CadastroCliente extends javax.swing.JFrame {
                             .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel9)
                             .addComponent(txtPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel10)))
+                            .addComponent(jLabel10))
+                        .addGap(29, 29, 29)
+                        .addComponent(btnEditar, javax.swing.GroupLayout.DEFAULT_SIZE, 43, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtNascimento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -255,9 +270,9 @@ public class CadastroCliente extends javax.swing.JFrame {
                             .addComponent(jLabel8))
                         .addGap(28, 28, 28)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtCadastra, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtListar, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
+                            .addComponent(btnCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnListar, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(81, 81, 81))
         );
@@ -265,7 +280,7 @@ public class CadastroCliente extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtCadastraActionPerformedCadastrar(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCadastraActionPerformedCadastrar
+    private void btnCadastrarActionPerformedCadastrar(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformedCadastrar
         
         ClienteBeans cliente = new ClienteBeans();
         
@@ -297,13 +312,13 @@ public class CadastroCliente extends javax.swing.JFrame {
             txtEmail.setText("");
             txtNascimento.setText("");
             txtTelefone.setText("");
-    }//GEN-LAST:event_txtCadastraActionPerformedCadastrar
+    }//GEN-LAST:event_btnCadastrarActionPerformedCadastrar
 
-    private void txtListarActionPerformedListar(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtListarActionPerformedListar
+    private void btnListarActionPerformedListar(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListarActionPerformedListar
         ListarClientes();
-    }//GEN-LAST:event_txtListarActionPerformedListar
+    }//GEN-LAST:event_btnListarActionPerformedListar
 
-    private void txtBuscaActionPerformedListar(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBuscaActionPerformedListar
+    private void btnBuscarActionPerformedListar(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformedListar
         // TODO add your handling code here:
 
         ClienteDAO dao = new ClienteDAO();
@@ -317,21 +332,56 @@ public class CadastroCliente extends javax.swing.JFrame {
             ListarClientes();
     
         } else{
-                txtNome.setText(String.valueOf(cliente.getNome()));
-                txtEmail.setText(String.valueOf(cliente.getEmail()));
-                txtNascimento.setText(String.valueOf(cliente.getDataNascimento()));
-                txtTelefone.setText(String.valueOf(cliente.getTelefone()));
-                txtCpf.setText(String.valueOf(cliente.getCpf()));
-                txtCodigo.setText(String.valueOf(cliente.getCodCliente()));
-                comboSexo.setSelectedItem(cliente.getSexo());
+                if(cliente.getCodCliente() != 0){
+                    txtNome.setText(String.valueOf(cliente.getNome()));
+                    txtEmail.setText(String.valueOf(cliente.getEmail()));
+                    txtNascimento.setText(String.valueOf(cliente.getDataNascimento()));
+                    txtTelefone.setText(String.valueOf(cliente.getTelefone()));
+                    txtCpf.setText(String.valueOf(cliente.getCpf()));
+                    txtCodigo.setText(String.valueOf(cliente.getCodCliente()));
+                    comboSexo.setSelectedItem(cliente.getSexo());
+                }
+                
             
         }
         
-       
-        
-      
 
-    }//GEN-LAST:event_txtBuscaActionPerformedListar
+    }//GEN-LAST:event_btnBuscarActionPerformedListar
+
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+        // TODO add your handling code here:
+        
+        ClienteBeans cliente = new ClienteBeans();
+        
+        cliente.setNome(txtNome.getText());
+        cliente.setCpf(txtCpf.getText());
+        cliente.setEmail(txtEmail.getText());
+        cliente.setTelefone(txtTelefone.getText());
+        cliente.setDataNascimento(txtNascimento.getText());
+        cliente.setSexo(comboSexo.getSelectedItem().toString());
+        cliente.setCodCliente(Integer.parseInt(txtCodigo.getText()));
+        
+        if(txtNome.getText().isEmpty() || txtEmail.getText().isEmpty() || txtNascimento.getText().isEmpty() || txtCpf.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null, "Os campos não podem retornar vazios!!!!");
+        }
+        else{
+            ClienteDAO dao = new ClienteDAO();
+            dao.editaCliente(cliente);
+        
+            JOptionPane.showMessageDialog(null, "Cliente "+txtNome.getText()+" alterado com sucesso! ");
+        
+            txtNome.setText("");
+            txtCpf.setText("");
+            txtEmail.setText("");
+            txtNascimento.setText("");
+            txtTelefone.setText("");
+            txtPesquisa.setText("");
+            
+        }
+        
+        
+        
+    }//GEN-LAST:event_btnEditarActionPerformed
 
     public void ListarClientes(){
      
@@ -400,6 +450,10 @@ public class CadastroCliente extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBuscar;
+    private javax.swing.JButton btnCadastrar;
+    private javax.swing.JButton btnEditar;
+    private javax.swing.JButton btnListar;
     private javax.swing.JComboBox<String> comboSexo;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
@@ -412,12 +466,9 @@ public class CadastroCliente extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTableCliente;
-    private javax.swing.JButton txtBusca;
-    private javax.swing.JButton txtCadastra;
     private javax.swing.JTextField txtCodigo;
     private javax.swing.JTextField txtCpf;
     private javax.swing.JTextField txtEmail;
-    private javax.swing.JButton txtListar;
     private javax.swing.JTextField txtNascimento;
     private javax.swing.JTextField txtNome;
     private javax.swing.JTextField txtPesquisa;
