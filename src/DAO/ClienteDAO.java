@@ -8,6 +8,7 @@ import Utilitarios.Conexao;
 import Beans.ClienteBeans;
 import GUI.CadastroCliente;
 import Utilitarios.modeloTabela;
+import com.sun.javafx.scene.NodeHelper;
 import java.util.List;
 import java.util.ArrayList;
 import java.sql.*;
@@ -31,7 +32,12 @@ public class ClienteDAO {
      String sexo;
      String telefone;
      
+     public ClienteBeans cli = new ClienteBeans();
+     public Conexao con = new Conexao();
      
+     String pesquisa;
+
+
      /*public FuncionarioDAO(){
          this.connection = new Conexao().Conectar();
          
@@ -41,6 +47,8 @@ public class ClienteDAO {
          
          Connection con = Conexao.Conectar();
          PreparedStatement stmt = null;
+         
+         
          
          String sql = "insert into cliente (nome, dataNascimento, sexo, cpf, email, telefone) VALUES (?,?,?,?,?,?)";
          
@@ -69,43 +77,88 @@ public class ClienteDAO {
     
 }
      
-     public List<ClienteBeans> read(){
-         
+      public ArrayList preencherTabela(){
+        
          Connection con = Conexao.Conectar();
          PreparedStatement stmt = null;
          ResultSet rs = null;
          
-         List<ClienteBeans> clientes = new ArrayList<>();
-         
-         try {
-             stmt = con.prepareStatement("select * cliente ");
-             rs = stmt.executeQuery();
-             
-             while(rs.next()){
-                 
-                 ClienteBeans cliente = new ClienteBeans();
-                 
-                 cliente.setCodCliente(rs.getInt("codCliente"));
-                 cliente.setDataNascimento(rs.getString("dataNascimento"));
-                 cliente.setSexo(rs.getString("sexo"));
-                 cliente.setTelefone(rs.getString("telefone"));
-                 cliente.setEmail(rs.getString("email"));
-                 cliente.setRg(rs.getString("rg"));
-                 clientes.add(cliente);
+        try {
+            stmt = con.prepareStatement("select codCliente, nome, email, telefone from cliente");
+            rs = stmt.executeQuery();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao carregar colunas!" + ex);
+        }
 
-             }
-                     
-                     } catch (SQLException ex) {
-             Logger.getLogger(ClienteDAO.class.getName()).log(Level.SEVERE, null, ex);
-         }finally{
-             Conexao.Desconectar(con, (com.mysql.jdbc.PreparedStatement) stmt, rs);
+        ArrayList dados = new ArrayList();
+        
+       // String[] colunas = new String[]{"Codigo", "Nome", "Email", "Telefone"};
+        
+        try {
+            rs.first();
+            do{
+                dados.add(new Object[]{rs.getInt("codCliente"), rs.getString("nome"),rs.getString("email"), rs.getString("telefone")});
+                
+            }while(rs.next());
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "erro!!!" + ex);
+        }finally{
+            Conexao.Desconectar(con, (com.mysql.jdbc.PreparedStatement) stmt, rs);
+        }
+      
+      return dados;
+      }
+      
+      public ClienteBeans buscaCliente(ClienteBeans cliente){
+          
+         Connection con = Conexao.Conectar();
+         PreparedStatement stmt = null;
+         ResultSet rs = null;
+         
+
+         String sql = "select * from cliente where nome like '%" + cliente.getPesquisa() + "%'";
+
+         try{
+            stmt = con.prepareStatement(sql);
+            rs = stmt.executeQuery();
+            
+             rs.first();
+             //buscaNomeCliente(rs.getInt("codCliente"));
+             cli.setNome(rs.getString("nome"));
+             cli.setCpf(rs.getString("cpf"));
+             cli.setEmail(rs.getString("email"));
+             cli.setDataNascimento(rs.getString("dataNascimento"));
+             cli.setTelefone(rs.getString("telefone"));
+             cli.setSexo(rs.getString("sexo"));
+             cli.setCodCliente(rs.getInt("codCliente"));
+         
+
+         }catch(SQLException ex){
+             JOptionPane.showMessageDialog(null, "erro!!! nada encontrado!" + ex);
          }
          
-         return clientes;
+         return cli;
+      }
+      
+      public void buscaNomeCliente(int cod){
+          
+         Connection con = Conexao.Conectar();
+         PreparedStatement stmt = null;
+         ResultSet rs = null;
          
+         String sql = "select * from cliente where codCliente=" + cod + "";
          
-         
-     }
-     
-     
+         try{
+             rs.first();
+             nome = rs.getString("nome");
+             
+         }catch(SQLException ex){
+             JOptionPane.showMessageDialog(null, "erro!!!" + ex);
+         }finally{
+            Conexao.Desconectar(con, (com.mysql.jdbc.PreparedStatement) stmt, rs);
+        }
+            
+      }
 }
+
+

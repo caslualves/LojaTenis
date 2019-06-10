@@ -18,11 +18,20 @@ public class ClienteBeans {
     private String sexo;
     private String email;   
     private String telefone;
+    String pesquisa;
     
         public ClienteBeans(){
     
 }
 
+    public String getPesquisa() {
+        return pesquisa;
+    }
+
+    public void setPesquisa(String pesquisa) {
+        this.pesquisa = pesquisa;
+    }
+   
     public int getCodCliente() {
         return codCliente;
     }
