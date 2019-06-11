@@ -84,7 +84,7 @@ public class ClienteDAO {
          ResultSet rs = null;
          
         try {
-            stmt = con.prepareStatement("select codCliente, nome, email, telefone from cliente");
+            stmt = con.prepareStatement("select codCliente, nome, email, telefone, dataNascimento from cliente");
             rs = stmt.executeQuery();
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Erro ao carregar colunas!" + ex);
@@ -97,11 +97,48 @@ public class ClienteDAO {
         try {
             rs.first();
             do{
-                dados.add(new Object[]{rs.getInt("codCliente"), rs.getString("nome"),rs.getString("email"), rs.getString("telefone")});
+                dados.add(new Object[]{rs.getInt("codCliente"), rs.getString("nome"),rs.getString("email"), 
+                    rs.getString("telefone") , rs.getString("dataNascimento")});
                 
             }while(rs.next());
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "erro!!!" + ex);
+        }finally{
+            Conexao.Desconectar(con, (com.mysql.jdbc.PreparedStatement) stmt, rs);
+        }
+      
+      return dados;
+      }
+      
+      public ArrayList preencherTabela(String pesquisa){
+        
+         Connection con = Conexao.Conectar();
+         PreparedStatement stmt = null;
+         ResultSet rs = null;
+         
+         String sql = "select codCliente, nome, email, telefone, dataNascimento from cliente where nome like '%" + pesquisa + "%'";
+         
+         
+        try {
+            stmt = con.prepareStatement(sql);
+            rs = stmt.executeQuery();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao carregar colunas!" + ex);
+        }
+
+        ArrayList dados = new ArrayList();
+        
+       // String[] colunas = new String[]{"Codigo", "Nome", "Email", "Telefone"};
+        
+        try {
+            rs.first();
+            do{
+                dados.add(new Object[]{rs.getInt("codCliente"), rs.getString("nome"),rs.getString("email"), 
+                    rs.getString("telefone") , rs.getString("dataNascimento")});
+                
+            }while(rs.next());
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Nada encontrado!");
         }finally{
             Conexao.Desconectar(con, (com.mysql.jdbc.PreparedStatement) stmt, rs);
         }
@@ -115,12 +152,16 @@ public class ClienteDAO {
          PreparedStatement stmt = null;
          ResultSet rs = null;
          
+         //ClienteBeans cli = new ClienteBeans();
+         
 
-         String sql = "select * from cliente where nome like '%" + cliente.getPesquisa() + "%'";
+         String sql = "select * from cliente where nome like '%" + cliente.getNome()+ "%'";
 
          try{
             stmt = con.prepareStatement(sql);
             rs = stmt.executeQuery();
+            
+            
             
             if(!rs.isBeforeFirst()){
                 JOptionPane.showMessageDialog(null, "Nada encontrado!");
@@ -141,7 +182,7 @@ public class ClienteDAO {
          }catch(SQLException ex){
              JOptionPane.showMessageDialog(null, "erro!!!" + ex);
              
-         }
+         }Conexao.Desconectar(con, (com.mysql.jdbc.PreparedStatement) stmt, rs);
          
          return cli;
       }
@@ -193,15 +234,7 @@ public class ClienteDAO {
             Conexao.Desconectar(con, (com.mysql.jdbc.PreparedStatement)stmt);
         }
         
-             
-            
-         
-         
-         
-         
-         
-         
-         
+  
       }
 }
 

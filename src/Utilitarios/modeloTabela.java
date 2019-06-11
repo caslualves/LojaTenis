@@ -46,6 +46,8 @@ public class modeloTabela extends AbstractTableModel {
         return linhas.size();
     }
     
+    
+    
     public String getColumnName(int numCol){
         return colunas[numCol];
     }
@@ -57,5 +59,11 @@ public class modeloTabela extends AbstractTableModel {
         
     }
     
+    public void setRowCounts(){
+        
+    }    
+    public void limparLinhas(){
+        linhas.removeAll(linhas);
+    }
     
 }
