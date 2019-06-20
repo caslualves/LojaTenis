@@ -28,6 +28,7 @@ public class ProdutoDAO {
     double preco;
     int codMarca;
     int codCategoria;
+    public ProdutoBeans prod = new ProdutoBeans();
     
      public void cadastraProduto(ProdutoBeans produto){
          
@@ -61,6 +62,44 @@ public class ProdutoDAO {
          }
     
 }
+     public ProdutoBeans buscaProduto(ProdutoBeans produto){
+          
+         Connection con = Conexao.Conectar();
+         PreparedStatement stmt = null;
+         ResultSet rs = null;
+         
+         //ClienteBeans cli = new ClienteBeans();
+         
+
+         String sql = "select * from produto where descricao like '%" + produto.getDescricao()+ "%'";
+
+         try{
+            stmt = con.prepareStatement(sql);
+            rs = stmt.executeQuery();
+            
+            
+            
+            if(!rs.isBeforeFirst()){
+                JOptionPane.showMessageDialog(null, "Nada encontrado!");
+                
+            } else{
+                rs.first();
+                //buscaNomeCliente(rs.getInt("codCliente"));
+                prod.setDescricao(rs.getString("descricao"));
+                prod.setCodProduto(rs.getInt("codproduto"));
+                prod.setPreco(rs.getFloat("preco"));
+                
+                //FALTA COISA
+                
+            }
+            
+         }catch(SQLException ex){
+             JOptionPane.showMessageDialog(null, "erro!!!" + ex);
+             
+         }Conexao.Desconectar(con, (com.mysql.jdbc.PreparedStatement) stmt, rs);
+         
+         return prod;
+      }
      
      public void popularComboBox(JComboBox combo, String tabela){
         
@@ -143,5 +182,43 @@ public class ProdutoDAO {
         }
            
      }
+      
+      public ArrayList preencherTabela(String pesquisa){
+        
+         Connection con = Conexao.Conectar();
+         PreparedStatement stmt = null;
+         ResultSet rs = null;
+         
+         String sql = "select codproduto, descricao, m.nome, preco from produto p join marca m on p.codmarca = m.codmarca"
+                 + " where descricao like '%" + pesquisa + "%'";
+         
+         
+        try {
+            stmt = con.prepareStatement(sql);
+            rs = stmt.executeQuery();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao carregar colunas!" + ex);
+        }
+
+        ArrayList dados = new ArrayList();
+        
+       // String[] colunas = new String[]{"Codigo", "Nome", "Email", "Telefone"};
+        
+        try {
+            rs.first();
+            do{
+                dados.add(new Object[]{rs.getInt("codproduto"), 
+                    rs.getString("descricao"),rs.getString("nome"), rs.getFloat("preco")});
+
+                
+            }while(rs.next());
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Nada encontrado!");
+        }finally{
+            Conexao.Desconectar(con, (com.mysql.jdbc.PreparedStatement) stmt, rs);
+        }
+      
+      return dados;
+      }
      
 }

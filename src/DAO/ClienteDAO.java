@@ -136,6 +136,8 @@ public class ClienteDAO {
                 dados.add(new Object[]{rs.getInt("codCliente"), rs.getString("nome"),rs.getString("email"), 
                     rs.getString("telefone") , rs.getString("dataNascimento")});
                 
+                JOptionPane.showMessageDialog(null, dados.get(0));
+                
             }while(rs.next());
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Nada encontrado!");
