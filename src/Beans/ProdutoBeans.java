@@ -20,9 +20,20 @@ public class ProdutoBeans {
     private int codMarca;
     private int codFornecedor;
     private int codCategoria;
+    private int quantidade;
     private String genero;
     String nomeMarca;
     String nomeCategoria;
+
+    public int getQuantidade() {
+        return quantidade;
+    }
+
+    public void setQuantidade(int quantidade) {
+        this.quantidade = quantidade;
+    }
+    
+    
     
     public ProdutoBeans(){
         

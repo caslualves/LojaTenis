@@ -22,6 +22,7 @@ import javax.swing.JOptionPane;
  */
 public class ProdutoDAO {
     int codProduto;
+    int quantidade;
     String descricao;
     String nomeMarca;
     String nomeCategoria;
@@ -182,6 +183,60 @@ public class ProdutoDAO {
         }
            
      }
+      
+      public int bucarQuantidade(int codProduto){
+         
+        Connection con = Conexao.Conectar();
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        
+        String sql = "select quantidade from produto where codproduto = " +codProduto;
+
+        try {
+            stmt = con.prepareStatement(sql);
+            rs = stmt.executeQuery();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao retornar quantidade" + ex);
+        }
+        
+        try{
+            rs.first();
+            quantidade = rs.getInt("quantidade");
+        }catch (SQLException ex){
+            //JOptionPane.showMessageDialog(null, "Erro ao retornar quantidade!" + ex);
+        }finally{
+            Conexao.Desconectar(con);
+        }
+        
+        
+        return quantidade;
+           
+     }
+      
+      public void baixarEstoque(ProdutoBeans produto){
+        Connection con = Conexao.Conectar();
+        PreparedStatement stmt = null;
+        //ResultSet rs = null;
+         
+        String sql = "update produto set quantidade=? where codproduto=?";
+
+        try{
+            stmt = con.prepareStatement(sql);
+
+            stmt.setInt(1, produto.getQuantidade());
+            stmt.setInt(2, produto.getCodProduto());
+
+            stmt.executeUpdate();
+            stmt.close();
+            
+        }catch(SQLException ex){
+            JOptionPane.showMessageDialog(null, "erro ao dar baixa" + ex); 
+        }finally{
+            Conexao.Desconectar(con, (com.mysql.jdbc.PreparedStatement)stmt);
+        }
+        
+  
+      }
       
       public ArrayList preencherTabela(String pesquisa){
         

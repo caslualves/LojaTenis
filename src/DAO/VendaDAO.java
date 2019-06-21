@@ -68,6 +68,75 @@ public class VendaDAO {
          }
     
 }
+     public void inserirItem(VendaBeans venda){
+         
+         Connection con = Conexao.Conectar();
+         PreparedStatement stmt = null;
+         
+         String sql = "insert into itempedido (codproduto, codpedido, quantidade)VALUES(?,?,?)";
+         
+         try{
+             
+             stmt = con.prepareStatement(sql);
+
+             stmt.setInt(1, venda.getCodProduto());
+             stmt.setDouble(2, venda.getCodPedido());
+             stmt.setInt(3, venda.getQtdItem());
+             
+
+             stmt.executeUpdate();
+             stmt.close();
+             
+         }catch(SQLException u){
+             throw new RuntimeException(u);
+             
+         }finally{
+             Conexao.Desconectar(con);
+             
+         }
+    
+}
+     
+     public ArrayList preencherTabelaItem(int codPedido){
+        
+         Connection con = Conexao.Conectar();
+         PreparedStatement stmt = null;
+         ResultSet rs = null;
+         
+         
+         String sql = "select * from produto p join itempedido ip on p.codproduto = ip.codproduto "
+                 + "where codpedido = " + codPedido;
+         
+         
+        try {
+            stmt = con.prepareStatement(sql);
+            rs = stmt.executeQuery();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao carregar colunas!" + ex);
+        }
+
+        ArrayList dados = new ArrayList();
+        
+       // String[] colunas = new String[]{"Codigo", "Nome", "Email", "Telefone"};
+        
+        try {
+            rs.first();
+            do{
+                dados.add(new Object[]{rs.getInt("codproduto"), rs.getString("descricao"),rs.getString("preco"), 
+                    rs.getString("ip.quantidade")});
+                
+                
+            }while(rs.next());
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Nada encontrado!");
+        }finally{
+            Conexao.Desconectar(con, (com.mysql.jdbc.PreparedStatement) stmt, rs);
+        }
+      
+      return dados;
+      }
+     
+     
      
      public int retornaCodVenda(){
           
@@ -97,6 +166,38 @@ public class VendaDAO {
          
          return codVenda;
       }
+     
+     public float somaItem(int codPedido){
+          
+         Connection con = Conexao.Conectar();
+         PreparedStatement stmt = null;
+         ResultSet rs = null;
+         
+         String sql = "select sum(p.preco * ip.quantidade)total from itempedido ip join produto p on p.codproduto = ip.codproduto "
+                 + "where codpedido = " + codPedido;
+
+         try{
+            stmt = con.prepareStatement(sql);
+            rs = stmt.executeQuery();
+            
+            if(!rs.isBeforeFirst()){
+                JOptionPane.showMessageDialog(null, "Nada encontrado!");
+                
+            } else{
+                rs.last();
+                valorTotal = rs.getInt("total");
+
+            }
+            
+         }catch(SQLException ex){
+             JOptionPane.showMessageDialog(null, "erro!!!" + ex);
+             
+         }Conexao.Desconectar(con, (com.mysql.jdbc.PreparedStatement) stmt, rs);
+         
+         return valorTotal;
+      }
+     
+     
     
     
 }

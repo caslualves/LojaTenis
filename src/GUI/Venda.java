@@ -21,6 +21,9 @@ import javax.swing.ListSelectionModel;
  * @author lucas
  */
 public class Venda extends javax.swing.JFrame {
+    float valorTotal = 0;
+    
+    
 
     /**
      * Creates new form Venda
@@ -143,6 +146,11 @@ public class Venda extends javax.swing.JFrame {
         btnCancelar.setText("CANCELAR VENDA");
 
         btnAdicionar.setText("ADD");
+        btnAdicionar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAdicionarActionPerformed(evt);
+            }
+        });
 
         jLabel8.setText("Cod Produto:");
 
@@ -316,7 +324,7 @@ public class Venda extends javax.swing.JFrame {
                     txtQunatidade.setText("1");
                     txtCodProduto.setText(String.valueOf(produto.getCodProduto()));
                     txtValorItem.setText(String.valueOf(produto.getPreco()));
-                    txtValorTotal.setText(String.valueOf(produto.getPreco()));
+                    //txtValorTotal.setText(String.valueOf(produto.getPreco()));
                 }
     }//GEN-LAST:event_tabelaPesquisaMouseClicked
 
@@ -327,13 +335,14 @@ public class Venda extends javax.swing.JFrame {
 
     private void txtQunatidadeKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtQunatidadeKeyReleased
         // TODO add your handling code here:
-        float valorTotal;
-        
-        if(!txtQunatidade.getText().isEmpty())	{
-            valorTotal = Float.parseFloat(txtValorItem.getText())*Integer.parseInt(txtQunatidade.getText());
-             txtValorTotal.setText(String.valueOf(valorTotal));
-            
-        }
+//        float valorTotal;
+//        valorTotal = Float.parseFloat(txtValorItem.getText())*Integer.parseInt(txtQunatidade.getText());
+//        
+//        if(!txtQunatidade.getText().isEmpty())	{
+//            valorTotal = Float.parseFloat(txtValorItem.getText())*Integer.parseInt(txtQunatidade.getText());
+//             txtValorTotal.setText(String.valueOf(total));
+//            
+//        }
         
         
     }//GEN-LAST:event_txtQunatidadeKeyReleased
@@ -357,6 +366,63 @@ public class Venda extends javax.swing.JFrame {
               
         }
     }//GEN-LAST:event_btnAbirVendaActionPerformed
+
+    private void btnAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarActionPerformed
+        // TODO add your handling code here:
+        VendaBeans venda = new VendaBeans();
+        
+        venda.setCodProduto(Integer.parseInt(txtCodProduto.getText()));
+        venda.setCodPedido(Integer.parseInt(txtCodVenda.getText()));
+        venda.setQtdItem(Integer.parseInt(txtQunatidade.getText()));
+        
+        if ((txtQunatidade.getText().isEmpty()) || ((txtCodVenda.getText().isEmpty() || (txtCodProduto.getText().isEmpty())))) {
+   JOptionPane.showMessageDialog(null, "Os campos não podem estar vazios!");
+   
+}
+        
+        else{
+            VendaDAO dao = new VendaDAO();
+            
+            ProdutoDAO pdao = new ProdutoDAO();
+            int quantidade = pdao.bucarQuantidade(Integer.parseInt(txtCodProduto.getText()));
+            
+            if(quantidade >= Integer.parseInt(txtQunatidade.getText())){
+                dao.inserirItem(venda);
+                JOptionPane.showMessageDialog(null, "Item inserido com sucesso! ");
+                
+    
+                valorTotal = dao.somaItem(Integer.parseInt(txtCodVenda.getText()));
+                txtValorTotal.setText(String.valueOf(valorTotal));
+                
+                int novaQuantidade = quantidade - Integer.parseInt(txtQunatidade.getText());
+                ProdutoBeans produto = new ProdutoBeans();
+                produto.setQuantidade(novaQuantidade);
+                produto.setCodProduto(Integer.parseInt(txtCodProduto.getText()));
+                
+                
+                pdao.baixarEstoque(produto);
+                
+                listarItens();
+                       
+
+                txtQunatidade.setText("");
+                txtValorItem.setText("");
+                txtCodProduto.setText("");
+                
+                
+
+                
+            }
+            else{
+                JOptionPane.showMessageDialog(null, "Quantidade insuficiente no estoque!");
+                txtQunatidade.setText("");
+                txtValorItem.setText("");
+                txtCodProduto.setText("");
+            }
+
+        }
+        
+    }//GEN-LAST:event_btnAdicionarActionPerformed
 
      public void ListarProdutos(){
      
@@ -387,6 +453,39 @@ public class Venda extends javax.swing.JFrame {
         
        
     }
+     
+     public void listarItens(){
+     
+        VendaDAO dao = new VendaDAO();
+        
+        ArrayList dados = new ArrayList();
+        dados = dao.preencherTabelaItem(Integer.parseInt(txtCodVenda.getText()));
+        
+        String[] colunas = new String[]{"Codigo", "Nome", "Preco", "Quantidade"};
+       
+        modeloTabela modelo = new modeloTabela(dados, colunas);
+        
+        tabelaItemVenda.setModel(modelo);
+        tabelaItemVenda.getColumnModel().getColumn(0).setPreferredWidth(50);
+        tabelaItemVenda.getColumnModel().getColumn(0).setResizable(false);
+        
+        tabelaItemVenda.getColumnModel().getColumn(1).setPreferredWidth(180);
+        tabelaItemVenda.getColumnModel().getColumn(1).setResizable(false);
+        
+        tabelaItemVenda.getColumnModel().getColumn(2).setPreferredWidth(150);
+        tabelaItemVenda.getColumnModel().getColumn(2).setResizable(false);
+        
+        tabelaItemVenda.getColumnModel().getColumn(3).setPreferredWidth(150);
+        tabelaItemVenda.getColumnModel().getColumn(3).setResizable(false);
+       
+        
+        tabelaItemVenda.setAutoResizeMode(tabelaItemVenda.AUTO_RESIZE_OFF);
+        tabelaItemVenda.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        
+       
+    }
+     
+     
     /**
      * @param args the command line arguments
      */
