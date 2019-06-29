@@ -62,8 +62,17 @@ public class modeloTabela extends AbstractTableModel {
     public void setRowCounts(){
         
     }    
-    public void limparLinhas(){
-        linhas.removeAll(linhas);
+    public void remove(int indexRow) {
+        if(indexRow< linhas.size()){     
+            linhas.remove(indexRow);
+            fireTableRowsDeleted(indexRow, indexRow);
+        }
     }
+
+//    public void remove(T element) {
+//        int index = linhas.indexOf(element);
+//        linhas.remove(element);
+//        fireTableRowsDeleted(index, index);
+//    }
     
 }

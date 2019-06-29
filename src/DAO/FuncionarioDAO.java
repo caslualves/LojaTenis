@@ -35,6 +35,8 @@ public class FuncionarioDAO {
      String email;
      String telefone;
      int numero;
+     
+     public FuncionarioBeans func = new FuncionarioBeans();
      //String nomeCargo;
      
      /*public FuncionarioDAO(){
@@ -49,7 +51,7 @@ public class FuncionarioDAO {
          Connection con = Conexao.Conectar();
          PreparedStatement stmt = null;
          
-         String sql = "insert into funcionario (cpf, rg, nome, dataNascimento, sexo, logradouro, uf, cep, bairro, cidade, complemento, email, telefone, numero, codCargo)VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+         String sql = "insert into funcionario (cpf, rg, nome, dataNascimento, sexo, logradouro, uf, cep, bairro, cidade, complemento, email, telefone, numero, cargo)VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
          
          try{
              
@@ -69,7 +71,9 @@ public class FuncionarioDAO {
              stmt.setString(12, funcionario.getEmail());
              stmt.setString(13, funcionario.getTelefone());
              stmt.setInt(14, funcionario.getNumero());
-             stmt.setInt(15, codCargo);
+             stmt.setString(15, funcionario.getNomeCargo());
+             
+             //stmt.setInt(15, codCargo);
             
              
              stmt.executeUpdate();
@@ -84,6 +88,91 @@ public class FuncionarioDAO {
          }
     
 }
+     
+     public FuncionarioBeans buscaFuncionario(FuncionarioBeans funcionario){
+          
+         Connection con = Conexao.Conectar();
+         PreparedStatement stmt = null;
+         ResultSet rs = null;
+         
+         //ClienteBeans cli = new ClienteBeans();
+         
+
+         String sql = "select * from funcionario where nome like '%" + funcionario.getNome()+ "%'";
+
+         try{
+            stmt = con.prepareStatement(sql);
+            rs = stmt.executeQuery();
+            
+            
+            
+            if(!rs.isBeforeFirst()){
+                JOptionPane.showMessageDialog(null, "Nada encontrado!");
+                
+            } else{
+                rs.first();
+                //buscaNomeCliente(rs.getInt("codCliente"));
+                func.setNome(rs.getString("nome"));
+                func.setCpf(rs.getString("cpf"));
+                func.setEmail(rs.getString("email"));
+                func.setDataNascimento(rs.getString("dataNascimento"));
+                func.setComplemento(rs.getString("complemento"));
+                func.setLogradouro(rs.getString("logradouro"));
+                func.setBairro(rs.getString("bairro"));
+                func.setCidade(rs.getString("cidade"));
+                func.setNumero(rs.getInt("numero"));
+                func.setRg(rs.getString("rg"));
+                func.setUf(rs.getString("UF"));
+                func.setSexo(rs.getString("sexo"));
+                func.setCodFuncionario(rs.getInt("codfuncionario")); 
+                func.setTelefone(rs.getString("telefone")); 
+                func.setCep(rs.getInt("cep")); 
+                func.setNomeCargo(rs.getString("cargo"));
+                
+                
+            }
+            
+         }catch(SQLException ex){
+             JOptionPane.showMessageDialog(null, "erro!!!" + ex);
+             
+         }Conexao.Desconectar(con, (com.mysql.jdbc.PreparedStatement) stmt, rs);
+         
+         return func;
+      }
+     
+     public void editaFuncionario(FuncionarioBeans funcionario){
+        Connection con = Conexao.Conectar();
+        PreparedStatement stmt = null;
+        //ResultSet rs = null;
+        
+        JOptionPane.showMessageDialog(null, funcionario.getCodFuncionario()); 
+        
+        
+         
+        String sql = "update funcionario set nome=?,dataNascimento=?, sexo=?, cpf=?, email=?, telefone=? where codFuncionario=?";
+
+        try{
+            stmt = con.prepareStatement(sql);
+
+            stmt.setString(1, funcionario.getNome());
+            stmt.setString(2, funcionario.getDataNascimento());
+            stmt.setString(3, funcionario.getSexo());
+            stmt.setString(4, funcionario.getCpf());
+            stmt.setString(5, funcionario.getEmail());  
+            stmt.setString(6, funcionario.getTelefone());
+            stmt.setInt(7, funcionario.getCodFuncionario());
+            
+            stmt.executeUpdate();
+            stmt.close();
+            
+        }catch(SQLException ex){
+            JOptionPane.showMessageDialog(null, "erro!!!" + ex); 
+        }finally{
+            Conexao.Desconectar(con, (com.mysql.jdbc.PreparedStatement)stmt);
+        }
+        
+  
+      }
      
      public void popularComboBox(JComboBox combo){
         
@@ -111,6 +200,43 @@ public class FuncionarioDAO {
             Conexao.Desconectar(con);
         }
      }
+     
+     public ArrayList preencherTabela(String pesquisa){
+        
+         Connection con = Conexao.Conectar();
+         PreparedStatement stmt = null;
+         ResultSet rs = null;
+         
+         String sql = "select codFuncionario, nome, email, telefone, cidade from funcionario where nome like '%" + pesquisa + "%'";
+         
+         
+        try {
+            stmt = con.prepareStatement(sql);
+            rs = stmt.executeQuery();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao carregar colunas!" + ex);
+        }
+
+        ArrayList dados = new ArrayList();
+        
+       // String[] colunas = new String[]{"Codigo", "Nome", "Email", "Telefone"};
+        
+        try {
+            rs.first();
+            do{
+                dados.add(new Object[]{rs.getInt("codFuncionario"), rs.getString("nome"),rs.getString("email"), 
+                    rs.getString("telefone") , rs.getString("cidade")});
+                
+                
+            }while(rs.next());
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Nada encontrado!");
+        }finally{
+            Conexao.Desconectar(con, (com.mysql.jdbc.PreparedStatement) stmt, rs);
+        }
+      
+      return dados;
+      }
      
      public void bucarCodCargo(String nome){
          

@@ -9,15 +9,15 @@ package GUI;
  *
  * @author lucas
  */
-public class Principal extends javax.swing.JFrame {
+public class PrincipalCaixa extends javax.swing.JFrame {
 
     /**
      * Creates new form Principal
      */
-    public Principal() {
+    public PrincipalCaixa() {
         initComponents();
     }
-    public Principal(String codFunc) {
+    public PrincipalCaixa(String codFunc) {
         initComponents();
         this.lblCodFunc.setText(codFunc);
     }
@@ -39,10 +39,8 @@ public class Principal extends javax.swing.JFrame {
         jMenu3 = new javax.swing.JMenu();
         jMenuItem5 = new javax.swing.JMenuItem();
         jMenuItem6 = new javax.swing.JMenuItem();
-        jMenuItem8 = new javax.swing.JMenuItem();
         jMenuItem9 = new javax.swing.JMenuItem();
         jMenuItem10 = new javax.swing.JMenuItem();
-        jMenuItem11 = new javax.swing.JMenuItem();
         jMenu5 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
 
@@ -85,20 +83,6 @@ public class Principal extends javax.swing.JFrame {
         });
         jMenu3.add(jMenuItem6);
 
-        jMenuItem8.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
-        jMenuItem8.setText("Funcionario");
-        jMenuItem8.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jMenuItem8MouseClicked(evt);
-            }
-        });
-        jMenuItem8.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem8ActionPerformed(evt);
-            }
-        });
-        jMenu3.add(jMenuItem8);
-
         jMenuItem9.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
         jMenuItem9.setText("Marca");
         jMenuItem9.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -126,20 +110,6 @@ public class Principal extends javax.swing.JFrame {
             }
         });
         jMenu3.add(jMenuItem10);
-
-        jMenuItem11.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
-        jMenuItem11.setText("Cargo");
-        jMenuItem11.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jMenuItem11MouseClicked(evt);
-            }
-        });
-        jMenuItem11.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem11ActionPerformed(evt);
-            }
-        });
-        jMenu3.add(jMenuItem11);
 
         jMenuBar1.add(jMenu3);
 
@@ -218,19 +188,10 @@ public class Principal extends javax.swing.JFrame {
         janela.setVisible(true);
     }//GEN-LAST:event_jMenuItem6ActionPerformed
 
-    private void jMenuItem11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem11ActionPerformed
-        CadastroCargo janela = new CadastroCargo();
-        janela.setVisible(true);
-    }//GEN-LAST:event_jMenuItem11ActionPerformed
-
     private void jMenuItem5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuItem5MouseClicked
         // TODO add your handling code here:
  
     }//GEN-LAST:event_jMenuItem5MouseClicked
-
-    private void jMenuItem8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuItem8MouseClicked
-        // TODO add your handling code here: 
-    }//GEN-LAST:event_jMenuItem8MouseClicked
 
     private void jMenuItem9MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuItem9MouseClicked
         // TODO add your handling code here:
@@ -245,12 +206,6 @@ public class Principal extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jMenuItem10MouseClicked
 
-    private void jMenuItem11MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuItem11MouseClicked
-        // TODO add your handling code here:
-        CadastroCargo janela = new CadastroCargo();
-        janela.setVisible(true);
-    }//GEN-LAST:event_jMenuItem11MouseClicked
-
     private void jMenu5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu5MouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenu5MouseClicked
@@ -260,12 +215,6 @@ public class Principal extends javax.swing.JFrame {
         CadastroProduto janela = new CadastroProduto();
         janela.setVisible(true); 
     }//GEN-LAST:event_jMenuItem5ActionPerformed
-
-    private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
-        // TODO add your handling code here:
-        CadastroFuncionario janela = new CadastroFuncionario();
-        janela.setVisible(true);
-    }//GEN-LAST:event_jMenuItem8ActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         // TODO add your handling code here:
@@ -292,20 +241,21 @@ public class Principal extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PrincipalCaixa.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PrincipalCaixa.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PrincipalCaixa.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PrincipalCaixa.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Principal().setVisible(true);
+                new PrincipalCaixa().setVisible(true);
             }
         });
     }
@@ -319,10 +269,8 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem10;
-    private javax.swing.JMenuItem jMenuItem11;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
-    private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JLabel lblCodFunc;
     // End of variables declaration//GEN-END:variables

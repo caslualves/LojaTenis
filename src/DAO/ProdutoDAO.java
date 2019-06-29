@@ -39,7 +39,7 @@ public class ProdutoDAO {
          Connection con = Conexao.Conectar();
          PreparedStatement stmt = null;
          
-         String sql = "insert into produto (descricao, codMarca, codCategoria, genero, preco)VALUES(?,?,?,?,?)";
+         String sql = "insert into produto (descricao, codMarca, codCategoria, genero, preco, quantidade)VALUES(?,?,?,?,?,?)";
          
          try{
              
@@ -50,6 +50,7 @@ public class ProdutoDAO {
              stmt.setInt(3, codCategoria);
              stmt.setString(4, produto.getGenero());
              stmt.setDouble(5, produto.getPreco());
+             stmt.setInt(6,produto.getQuantidade());
 
              stmt.executeUpdate();
              stmt.close();
