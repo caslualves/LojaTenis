@@ -73,7 +73,9 @@ public class ProdutoDAO {
          //ClienteBeans cli = new ClienteBeans();
          
 
-         String sql = "select * from produto where descricao like '%" + produto.getDescricao()+ "%'";
+         String sql = "select m.codMarca, codproduto, descricao, preco, m.nome, c.nome, quantidade, genero from produto p "
+                 + "join categoria c on p.codcategoria = c.codcategoria "
+                 + "join marca m on m.codmarca = p.codmarca where descricao like '%" + produto.getDescricao()+ "%'";
 
          try{
             stmt = con.prepareStatement(sql);
@@ -90,9 +92,13 @@ public class ProdutoDAO {
                 prod.setDescricao(rs.getString("descricao"));
                 prod.setCodProduto(rs.getInt("codproduto"));
                 prod.setPreco(rs.getFloat("preco"));
-                
-                //FALTA COISA
-                
+                prod.setCodMarca(rs.getInt("m.codMarca"));
+                prod.setNomeMarca(rs.getString("m.nome"));
+                prod.setGenero(rs.getString("genero"));
+                prod.setNomeCategoria(rs.getString("c.nome"));
+                prod.setQuantidade(rs.getInt("quantidade"));
+
+
             }
             
          }catch(SQLException ex){
@@ -245,8 +251,11 @@ public class ProdutoDAO {
          PreparedStatement stmt = null;
          ResultSet rs = null;
          
-         String sql = "select codproduto, descricao, m.nome, preco from produto p join marca m on p.codmarca = m.codmarca"
-                 + " where descricao like '%" + pesquisa + "%'";
+         //String sql = "select codproduto, descricao, m.nome, preco, c.nome, quantidade from produto p join marca m on p.codmarca = m.codmarca"
+               //  + "join categoria c on c.codCategoria = p.codCategoria where descricao like '%" + pesquisa + "%'";
+         
+         String sql = "select codproduto, descricao, m.nome, preco, c.nome, quantidade, genero from produto p join marca m on p.codmarca = m.codmarca "
+                 + "join categoria c on c.codCategoria = p.codCategoria where descricao like '%" + pesquisa + "%'";
          
          
         try {
@@ -264,7 +273,8 @@ public class ProdutoDAO {
             rs.first();
             do{
                 dados.add(new Object[]{rs.getInt("codproduto"), 
-                    rs.getString("descricao"),rs.getString("nome"), rs.getFloat("preco")});
+                    rs.getString("descricao"),rs.getString("nome"), rs.getFloat("preco"), rs.getString("c.nome"),  
+                    rs.getInt("quantidade"), rs.getString("genero")});
 
                 
             }while(rs.next());
